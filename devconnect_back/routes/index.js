@@ -2,8 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-  //res.send("Index...");
+  res.render("index", { title: "DevConnect" });
 });
 
 module.exports = router;
