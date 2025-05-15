@@ -1,76 +1,97 @@
 var express = require("express");
+const env = require("./env");
 var router = express.Router();
+const { createClient } = require("@supabase/supabase-js");
+
+// Setup Supabase client
+const supabaseUrl = env.SUPABASE_URL;
+const supabaseKey = env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // logged user
-router.get("/", function (req, res, next) {
+router.get("/", async (req, res, next) => {
   // query public games in DB
-  const allGames = [
-    {
-      game_id: "10002",
-      game_description: "Basic verbs in English",
-      game_data: { cards: [{ Run: "Correr" }] },
-      is_public: true,
-      creator_user_id: 125,
-      created_at: "1746900000",
-    },
-  ];
-  res.send(allGames);
+  const { data, error } = await supabase
+    .from("games")
+    .select("*")
+    .eq("is_public", true);
+
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ error: `Error fetching public games` });
+  }
+  res.json(data);
 });
 
 // logged admin
-router.get("/all", function (req, res, next) {
-  // query in DB
-  const allGames = [
-    {
-      game_id: "10001",
-      game_description: "Numbers in English",
-      game_data: { cards: [{ One: "1" }] },
-      is_public: false,
-      creator_user_id: 123,
-      created_at: "1746800000",
-    },
-    {
-      game_id: "10002",
-      game_description: "Basic verbs in English",
-      game_data: { cards: [{ Run: "Correr" }] },
-      is_public: true,
-      creator_user_id: 125,
-      created_at: "1746900000",
-    },
-  ];
-  res.send(allGames);
+router.get("/all", async (req, res, next) => {
+  // query all games in DB
+  const { data, error } = await supabase.from("games").select("*");
+
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ error: `Error fetching all games` });
+  }
+  res.json(data);
 });
 
 router
   .route("/:game_id")
-  .get((req, res) => {
+  .get(async (req, res) => {
     // middleware: query game by id
-    res.send({
-      game_id: "10001",
-      game_description: "Numbers in English",
-      game_data: { cards: [{ One: "1" }] },
-      is_public: false,
-      creator_user_id: 123,
-      created_at: "1746800000",
-    });
+    const { game_id } = req.params;
+    const user_id = req.user_id;
+    const { data, error } = await supabase
+      .from("games")
+      .select("*")
+      .eq("game_id", Number(game_id));
+    if (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ error: `Error fetching scores for game ${game_id}` });
+    }
+    res.json(data);
   })
-  .put((req, res) => {
-    // middleware: query game & creator user id and edit info in DB
-    const editedGame = [
-      {
-        game_id: "10001",
-        game_description: "Numbers in English",
-        game_data: { cards: [{ One: "1" }, { Two: "2" }] },
-        is_public: false,
-        creator_user_id: 123,
-        created_at: "1746800000",
-      },
-    ];
-    res.send(editedGame);
+  .post(async (res, res) => {
+    // create new game
+    const user_id = req.user_id;
+    const { name, description, is_public, questions } = req.body;
+    const { data, error } = await supabase
+      .from("games")
+      .insert([{ name, description, is_public, questions, user_id }]);
+
+    if (error) return res.status(500).json({ error });
+    res.status(201).json(data);
   })
-  .delete((req, res) => {
-    const deletionResult = false;
-    res.send(deletionResult);
+  .put(async (req, res) => {
+    // query game & creator user id and edit info in DB
+    const { game_id } = req.params;
+    const user_id = req.user_id;
+
+    const { name, description, is_public, questions } = req.body;
+    const today = new Date();
+    const date = today.toISOString();
+    const { data, error } = await supabase
+      .from("games")
+      .update({ name, description, is_public })
+      .match({ user_id, game_id });
+    if (error) return res.status(500).json({ error });
+    res.json(data);
+  })
+  .delete(async (req, res) => {
+    const user_id = req.user_id;
+    const { game_id } = req.params;
+    const today = new Date();
+    const score_date = today.toISOString();
+    const { data, error } = await supabase
+      .from("games")
+      .delete()
+      .match({ user_id, game_id })
+      .select();
+
+    if (error) return res.status(500).json({ error });
+    res.json({ deleted: data.length });
   });
 
 router.param("user_id", (req, res, next, user_id) => {

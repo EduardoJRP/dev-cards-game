@@ -1,30 +1,65 @@
 var express = require("express");
+const env = require("./env");
 var router = express.Router();
+const { createClient } = require("@supabase/supabase-js");
+
+// Setup Supabase client
+const supabaseUrl = env.SUPABASE_URL;
+const supabaseKey = env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // logged user
 router
-  .route("/")
-  .get((req, res) => {
-    // query user
-    const myProfile = [
-      {
-        user_id: 125,
-        username: "luismd",
-        created_at: "1746100000",
-      },
-    ];
-    res.send(myProfile);
+  .route("/:user_id")
+  .get(async (req, res) => {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("user_id", Number(user_id));
+
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: `Error fetching user ${user_id}` });
+    }
+    res.json(data);
   })
-  .put((req, res) => {
-    // edit user
-    const editedProfile = [
-      {
-        user_id: 125,
-        username: "luismdEdited",
-        created_at: "1746100000",
-      },
-    ];
-    res.send(editedProfile);
+  .post(async (req, res) => {
+    // create user
+    const user_id = req.user_id;
+    const { username, bio } = req.body;
+    const today = new Date();
+    const user_date = today.toISOString();
+    const { data, error } = await supabase
+      .from("users")
+      .insert([{ user_id, username, bio }]);
+
+    if (error) return res.status(500).json({ error });
+    res.json(data);
+  })
+  .put(async (req, res) => {
+    // edit user at user_id
+    const user_id = req.user_id;
+    const { username, bio } = req.body;
+    const today = new Date();
+    const user_date = today.toISOString();
+    const { data, error } = await supabase
+      .from("users")
+      .update({ username, bio })
+      .match({ user_id });
+    if (error) return res.status(500).json({ error });
+    res.json(data);
+  })
+  .delete(async (req, res) => {
+    // create user
+    const user_id = req.user_id;
+    const { data, error } = await supabase
+      .from("users")
+      .delete()
+      .match({ user_id })
+      .select();
+
+    if (error) return res.status(500).json({ error });
+    res.json({ deleted: data.length });
   });
 
 router.param("user_id", (req, res, next, user_id) => {

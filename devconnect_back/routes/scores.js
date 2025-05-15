@@ -39,7 +39,8 @@ router
 router.post("/", async (req, res) => {
   // insert
   // WARNING: must get user_id from auth instead of body...
-  const { user_id, game_id, score_points } = req.body;
+  const user_id = req.user_id;
+  const { game_id, score_points } = req.body;
   const today = new Date();
   const score_date = today.toISOString();
   const { data, error } = await supabase
@@ -51,7 +52,8 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-  const { user_id, game_id, score_points } = req.body;
+  const user_id = req.user_id;
+  const { game_id, score_points } = req.body;
   const today = new Date();
   const score_date = today.toISOString();
   const { data, error } = await supabase
@@ -64,7 +66,8 @@ router.put("/", async (req, res) => {
 });
 
 router.delete("/", async (req, res) => {
-  const { user_id, game_id } = req.body;
+  const user_id = req.user_id;
+  const { game_id } = req.body;
   const today = new Date();
   const score_date = today.toISOString();
   const { data, error } = await supabase
