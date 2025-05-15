@@ -12,9 +12,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 router.get("/", async (req, res, next) => {
   // query public games in DB
   const { data, error } = await supabase
-    .from("games")
-    .select("*")
-    .eq("is_public", true);
+    //.from("games").select("*").eq("is_public", true);
+    .rpc("get_public_games_info");
 
   if (error) {
     console.error(error);
@@ -38,7 +37,6 @@ router.get("/all", async (req, res, next) => {
 router
   .route("/:game_id")
   .get(async (req, res) => {
-    // middleware: query game by id
     const { game_id } = req.params;
     const user_id = req.user_id;
     const { data, error } = await supabase
@@ -47,9 +45,7 @@ router
       .eq("game_id", Number(game_id));
     if (error) {
       console.error(error);
-      return res
-        .status(500)
-        .json({ error: `Error fetching scores for game ${game_id}` });
+      return res.status(500).json({ error: `Error fetching game ${game_id}` });
     }
     res.json(data);
   })

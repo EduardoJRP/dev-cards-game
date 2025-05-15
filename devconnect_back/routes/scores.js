@@ -22,10 +22,17 @@ router
   // game scoreboard
   .get(async (req, res) => {
     const { game_id } = req.params;
-    const { data, error } = await supabase
-      .from("scores")
-      .select("*")
-      .eq("game_id", Number(game_id));
+    //const { data, error } = await supabase.from("scores").select("*").eq("game_id", Number(game_id));
+    const { data, error } = await supabase.rpc("get_game_scores", {
+      game_id_param: Number(game_id),
+    });
+    if (error) {
+      console.error(error);
+      return res
+        .status(500)
+        .json({ error: `Error fetching scores for game ${game_id}` });
+    }
+    res.json(data);
 
     if (error) {
       console.error(error);
@@ -39,8 +46,8 @@ router
 router.post("/", async (req, res) => {
   // insert
   // WARNING: must get user_id from auth instead of body...
-  const user_id = req.user_id;
-  const { game_id, score_points } = req.body;
+  //const user_id = req.user_id; // !!!
+  const { game_id, score_points, user_id } = req.body;
   const today = new Date();
   const score_date = today.toISOString();
   const { data, error } = await supabase
