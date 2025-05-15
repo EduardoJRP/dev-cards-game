@@ -1,4 +1,4 @@
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 export default clerkMiddleware();
 
@@ -10,3 +10,5 @@ export const config = {
     '/(api|trpc)(.*)',
   ],
 };
+
+// const isProtectedRoute = createRouteMatcher(["/game1(.*)", "game2(.*)"]);
