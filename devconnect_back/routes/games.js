@@ -53,34 +53,23 @@ router
     }
     res.json(data);
   })
-  .post(async (res, res) => {
-    // create new game
-    const user_id = req.user_id;
-    const { name, description, is_public, questions } = req.body;
-    const { data, error } = await supabase
-      .from("games")
-      .insert([{ name, description, is_public, questions, user_id }]);
-
-    if (error) return res.status(500).json({ error });
-    res.status(201).json(data);
-  })
   .put(async (req, res) => {
     // query game & creator user id and edit info in DB
     const { game_id } = req.params;
-    const user_id = req.user_id;
+    const user_id = req.user_id ?? 1; // !!!
 
     const { name, description, is_public, questions } = req.body;
     const today = new Date();
     const date = today.toISOString();
     const { data, error } = await supabase
       .from("games")
-      .update({ name, description, is_public })
+      .update({ name, description, is_public, questions })
       .match({ user_id, game_id });
     if (error) return res.status(500).json({ error });
     res.json(data);
   })
   .delete(async (req, res) => {
-    const user_id = req.user_id;
+    const user_id = req.user_id ?? 1; // !!!
     const { game_id } = req.params;
     const today = new Date();
     const score_date = today.toISOString();
@@ -93,6 +82,18 @@ router
     if (error) return res.status(500).json({ error });
     res.json({ deleted: data.length });
   });
+
+router.post("/", async (req, res) => {
+  // create new game
+  const user_id = req.user_id ?? 1; // !!!
+  const { name, description, is_public, questions } = req.body;
+  const { data, error } = await supabase
+    .from("games")
+    .insert([{ name, description, is_public, questions, user_id }]);
+
+  if (error) return res.status(500).json({ error });
+  res.status(201).json(data);
+});
 
 router.param("user_id", (req, res, next, user_id) => {
   req.user_id = user_id;

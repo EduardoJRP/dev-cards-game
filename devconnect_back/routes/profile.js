@@ -12,6 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 router
   .route("/:user_id")
   .get(async (req, res) => {
+    const user_id = req.user_id;
     const { data, error } = await supabase
       .from("users")
       .select("*")
@@ -21,19 +22,6 @@ router
       console.error(error);
       return res.status(500).json({ error: `Error fetching user ${user_id}` });
     }
-    res.json(data);
-  })
-  .post(async (req, res) => {
-    // create user
-    const user_id = req.user_id;
-    const { username, bio } = req.body;
-    const today = new Date();
-    const user_date = today.toISOString();
-    const { data, error } = await supabase
-      .from("users")
-      .insert([{ user_id, username, bio }]);
-
-    if (error) return res.status(500).json({ error });
     res.json(data);
   })
   .put(async (req, res) => {
@@ -51,7 +39,7 @@ router
   })
   .delete(async (req, res) => {
     // create user
-    const user_id = req.user_id;
+    const user_id = req.user_id ?? 4; // !!!
     const { data, error } = await supabase
       .from("users")
       .delete()
@@ -61,6 +49,19 @@ router
     if (error) return res.status(500).json({ error });
     res.json({ deleted: data.length });
   });
+
+router.post("/", async (req, res) => {
+  // create user
+  const { username, bio } = req.body;
+  const today = new Date();
+  const user_date = today.toISOString();
+  const { data, error } = await supabase
+    .from("users")
+    .insert([{ username, bio }]);
+
+  if (error) return res.status(500).json({ error });
+  res.json(data);
+});
 
 router.param("user_id", (req, res, next, user_id) => {
   req.user_id = user_id;
