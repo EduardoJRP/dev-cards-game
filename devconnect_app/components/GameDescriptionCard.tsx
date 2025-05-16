@@ -25,21 +25,32 @@ const GameDescriptionCard: React.FC<GameDescriptionCardProps> = ({
   const route = useRouter();
   return (
     <div
-      className="rounded-2xl shadow-md p-4 bg-white w-full max-w-xs cursor-pointer"
+      className="rounded-2xl shadow-md w-full max-w-xs cursor-pointer p-6 pt-4 bg-white dark:bg-gray-950 border border-solid border-violet-950 dark:border-violet-600"
       onClick={() => {
         route.push("/games/" + game_id);
       }}
     >
-      {/* <h2 className="text-xl font-bold mb-2">{game_id}</h2> */}
-      <h2 className="text-xl font-bold mb-2">{name}</h2>
-      <p className="text-sm font-bold italic text-gray-700 mb-1">
+      <h2 className="text-xl font-bold mb text-center text-gray-950 dark:text-gray-200">
+        {name}
+      </h2>
+      <p className="text-sm font-bold italic text-gray-900 dark:text-gray-400 mb-3 text-center">
         {description}
       </p>
-      <p className="text-xs text-gray-600">Difficulty: {difficulty}</p>
-      <p className="text-xs text-gray-600">Rating: {rating}</p>
-      <p className="text-xs text-gray-600">Best Player: {best_player}</p>
-      <p className="text-xs text-gray-600">High Score: {high_score}</p>
-      <p className="text-xs text-gray-600">Author: {author_user}</p>
+      <p className="text-xs text-gray-900 dark:text-gray-400">
+        Difficulty: {difficulty}
+      </p>
+      <p className="text-xs text-gray-900 dark:text-gray-400">
+        Rating: {rating}
+      </p>
+      <p className="text-xs text-gray-900 dark:text-gray-400">
+        Best Player: {best_player}
+      </p>
+      <p className="text-xs text-gray-900 dark:text-gray-400">
+        High Score: {high_score}
+      </p>
+      <p className="text-xs text-gray-900 dark:text-gray-400">
+        Author: {author_user}
+      </p>
     </div>
   );
 };
