@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import "./globals.css";
 import NavBar from "../components/navbar";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { CreateSetModal } from "@/container/modal";
 
 export default function Home() {
   const router = useRouter();
@@ -17,6 +18,11 @@ export default function Home() {
       <header>
         <NavBar />
       </header>
+
+      <section>
+        <CreateSetModal/>
+      </section>
+
       <SignedIn>
         <main className="flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-5xl font-semibold mb-8 text-white">Our Games</h1>
