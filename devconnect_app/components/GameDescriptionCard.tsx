@@ -30,10 +30,10 @@ const GameDescriptionCard: React.FC<GameDescriptionCardProps> = ({
         route.push("/games/" + game_id);
       }}
     >
-      <h2 className="text-xl font-bold mb text-center text-gray-950 dark:text-gray-200">
+      <h2 className="text-xl font-bold mb text-center text-gray-950 dark:text-gray-200 line-clamp-2">
         {name}
       </h2>
-      <p className="text-sm font-bold italic text-gray-900 dark:text-gray-400 mb-3 text-center">
+      <p className="text-sm font-bold italic text-gray-900 dark:text-gray-400 mb-3 text-center line-clamp-3">
         {description}
       </p>
       <p className="text-xs text-gray-900 dark:text-gray-400">

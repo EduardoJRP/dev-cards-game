@@ -70,8 +70,9 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
     },
     {
       game_id: 6,
-      name: "Game 6", // has a long very long name very long description",
-      description: "Sixth ", //game has a long very long name very long description does not fit",
+      name: "Game 6 has a long very long name very long description",
+      description:
+        "Sixth game has a long very long name very long description does not fit",
       difficulty: 30,
       rating: 4.12,
       best_player: "miguel",
