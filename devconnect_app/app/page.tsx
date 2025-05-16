@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import "./globals.css";
 import NavBar from "../components/navbar";
 import ScriptMenu from "../components/ScriptMenu";
+import ThemeToggleButton from "../components/ThemeToggleButton";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 export default function Home() {
@@ -15,6 +16,8 @@ export default function Home() {
       className="page-background min-h-screen"
       style={{ backgroundColor: "#4B2067" }}
     >
+      <ThemeToggleButton />
+      {/* TODO: Agregar a navbar */}
       <header>
         <NavBar />
       </header>
