@@ -1,7 +1,17 @@
+import NavBar from "@/components/navbar";
 import React from "react";
 
-const login = () => {
-  return <div>login</div>;
+const game1 = () => {
+  return (
+    <div
+      className="page-background min-h-screen"
+      style={{ backgroundColor: "#4B2067" }}
+    >
+      <header>
+        <NavBar />
+      </header>
+    </div>
+  );
 };
 
-export default login;
+export default game1;
