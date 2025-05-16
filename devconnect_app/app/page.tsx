@@ -7,6 +7,7 @@ import NavBar from "../components/navbar";
 import ScriptMenu from "../components/ScriptMenu";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
+import GameBestScores from "@/components/GameBestScores";
 
 export default function Home() {
   const router = useRouter();
@@ -39,6 +40,7 @@ export default function Home() {
             </button>
           </div>
           <ScriptMenu title="Library" />
+          <GameBestScores game_id={1} new_score={230} />
         </main>
       </SignedIn>
       <SignedOut>
