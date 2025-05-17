@@ -1,5 +1,6 @@
 import React from "react";
 import GameDescriptionCard from "./GameDescriptionCard";
+import { useAuth } from "@clerk/nextjs";
 
 interface Game {
   game_id: number;
@@ -10,6 +11,7 @@ interface Game {
   best_player: string;
   high_score: number;
   author_user: string;
+  color: string;
 }
 
 interface ScriptMenuProps {
@@ -27,6 +29,7 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
       best_player: "luis",
       high_score: 152,
       author_user: "luis",
+      color: "FF0000",
     },
     {
       game_id: 2,
@@ -37,6 +40,7 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
       best_player: "eduardo",
       high_score: 180,
       author_user: "luis",
+      color: "7B0A3E",
     },
     {
       game_id: 3,
@@ -47,6 +51,7 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
       best_player: "miguel",
       high_score: 140,
       author_user: "luis",
+      color: "AAAAAA",
     },
     {
       game_id: 4,
@@ -57,6 +62,7 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
       best_player: "luis",
       high_score: 152,
       author_user: "luis",
+      color: "FF00DD",
     },
     {
       game_id: 5,
@@ -67,6 +73,7 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
       best_player: "eduardo",
       high_score: 180,
       author_user: "luis",
+      color: "FFFF00",
     },
     {
       game_id: 6,
@@ -78,8 +85,13 @@ const ScriptMenu: React.FC<ScriptMenuProps> = ({ title }) => {
       best_player: "miguel",
       high_score: 140,
       author_user: "luis",
+      color: "FF0000",
     },
   ]; // get /games
+
+  const { isLoaded, isSignedIn, userId, sessionId, getToken } = useAuth();
+  console.log({ isLoaded, isSignedIn, userId, sessionId, getToken });
+  // TODO: llamar a getToken para obtener token, luego llamar a GET /games
 
   return (
     <div className="p-4 py-10 m-10 rounded-sm w-5/6 bg-[#FFFFFF19] dark:bg-[#000000AA] border-solid border dark:border-violet-600">

@@ -8,9 +8,24 @@ import ScriptMenu from "../components/ScriptMenu";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
 import GameBestScores from "@/components/GameBestScores";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Home() {
   const router = useRouter();
+  // ejemplo getToken inicio: TODO borrar
+  const { isLoaded, isSignedIn, userId, sessionId, getToken } = useAuth();
+  console.log({ isLoaded, isSignedIn, userId, sessionId, getToken });
+  const fetchExternalData = async () => {
+    const token = await getToken();
+    console.log(token);
+    // Fetch data from an external API
+    const response = await fetch("https://api.example.com/data", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.json();
+  };
 
   return (
     <div
@@ -38,6 +53,7 @@ export default function Home() {
             >
               game2
             </button>
+            <button onClick={fetchExternalData}>Fetch Data</button>
           </div>
           <ScriptMenu title="🎮 Library" />
           <GameBestScores game_id={1} new_score={230} />

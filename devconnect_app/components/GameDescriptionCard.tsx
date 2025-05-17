@@ -10,6 +10,7 @@ interface GameDescriptionCardProps {
   best_player: string;
   high_score: number;
   author_user: string;
+  color: string;
 }
 
 const GameDescriptionCard: React.FC<GameDescriptionCardProps> = ({
@@ -21,11 +22,12 @@ const GameDescriptionCard: React.FC<GameDescriptionCardProps> = ({
   best_player,
   high_score,
   author_user,
+  color,
 }) => {
   const route = useRouter();
   return (
     <div
-      className="rounded-2xl shadow-md w-full max-w-xs cursor-pointer p-6 pt-4 bg-white dark:bg-gray-950 border border-solid border-violet-950 dark:border-violet-600"
+      className={`rounded-2xl shadow-md w-full max-w-xs cursor-pointer p-6 pt-4 bg-white dark:bg-gray-950 border border-solid border-violet-950 dark:border-violet-600 border-t-[#${color}] dark:border-t-[#${color}]`}
       onClick={() => {
         route.push("/games/" + game_id);
       }}
