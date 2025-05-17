@@ -6,6 +6,7 @@ import "./globals.css";
 import NavBar from "../components/navbar";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { CreateSetModal } from "@/container/modal";
+import { AddCardModal } from "@/container/modal/AddCard";
 
 export default function Home() {
   const router = useRouter();
@@ -20,7 +21,8 @@ export default function Home() {
       </header>
 
       <section>
-        <CreateSetModal/>
+        <CreateSetModal />
+        {/* <AddCardModal isOpen={true} handleModal={() => { }} /> */}
       </section>
 
       <SignedIn>

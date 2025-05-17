@@ -21,4 +21,5 @@ export const fieldValidation: FieldValidationType = {
    description: [(value: string) => value.trim().length >= 1, 'La descripción es obligatoria'],
    category: [(value: string) => value.trim().length >= 1, 'La categoría es obligatoria'],
    color: [(value: string) => value.trim().length >= 1, 'El color es obligatorio'],
+   // isPublic: [(value: boolean) => !!value, 'El color es obligatorio'],
 };

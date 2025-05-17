@@ -2,7 +2,7 @@ import { EFieldValidation, fieldValidation, FieldValidationType } from '@/utils/
 import { useMemo, useRef, useState, ChangeEvent, FormEvent } from 'react';
 
 // Definimos el tipo del estado del formulario
-export type FormState = Record<string, string>;
+export type FormState = Record<string, unknown>;
 
 interface useFormProps {
    initialState?: FormState,
@@ -61,9 +61,9 @@ export const useForm = ({
       setFormState((prev) => ({ ...prev, [name]: value }));
 
       if (!activeValidation) return;
-      
+
       const [valid, errorMessage] = validationChange(name as EFieldValidation, value);
-      
+
       setFormValidation((prev) => ({ ...prev, [`${name}Valid`]: valid ? null : errorMessage }));
    };
 

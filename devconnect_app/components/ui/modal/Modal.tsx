@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 interface Props {
-  isOpen: boolean;
+  isOpen?: boolean;
   onOpenChange: (open: boolean) => void;
   title?: string;
   children: ReactNode;
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export const Modal = ({
-  isOpen,
+  isOpen = false,
   onOpenChange,
   title,
   children,

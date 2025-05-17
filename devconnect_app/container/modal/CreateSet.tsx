@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/form';
+import { Input, Switch } from '@/components/ui/form';
 import { ColorSelect } from '@/components/shared';
 import { CategorySelect } from '@/components/shared/CategorySelect';
 import { Book, FlaskConical, Sigma } from 'lucide-react';
@@ -44,7 +44,7 @@ export const CreateSetModal = () => {
     onInputChange,
   } = useForm({
     activeValidation: true,
-    initialState: { name: '', description: '', color: '', category: '' }
+    initialState: { name: '', description: '', color: '', category: '', isPublic: false },
   });
 
   const handleSubmit = onSubmitForm((data) => {
@@ -78,7 +78,7 @@ export const CreateSetModal = () => {
             label='Nombre'
             variant='outlined'
             name='name'
-            value={formState.name}
+            value={formState.name as string}
             error={!!formValidation.nameValid}
             onChange={onInputChange}
           />
@@ -88,7 +88,7 @@ export const CreateSetModal = () => {
             label='Descripción'
             variant='outlined'
             name='description'
-            value={formState.description}
+            value={formState.description as string}
             onChange={onInputChange}
             error={!!formValidation.descriptionValid}
           />
@@ -109,6 +109,13 @@ export const CreateSetModal = () => {
             options={colorOptions}
             error={!!formValidation.colorValid}
             onChange={onInputChange}
+          />
+
+          <Switch
+            labelTop="Hacer tu set de estudio público"
+            name='isPublic'
+            onChange={onInputChange}
+            size='md'
           />
 
           <Button
