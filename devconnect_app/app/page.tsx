@@ -39,7 +39,7 @@ export default function Home() {
               game2
             </button>
           </div>
-          <ScriptMenu title="Library" />
+          <ScriptMenu title="🎮 Library" />
           <GameBestScores game_id={1} new_score={230} />
         </main>
       </SignedIn>

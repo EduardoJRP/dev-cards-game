@@ -26,11 +26,15 @@ const GameBestScores: React.FC<GameBestScoresProps> = ({
   };
 
   const saveScore = function (score: Score) {
-    console.log("Modal: Wait" + score);
-    console.log("Modal: Score saved");
+    if (canSaveScore) {
+      console.log("Modal: Wait" + score);
+      console.log("Modal: Score saved");
+      canSaveScore = false;
+    }
   };
 
   let canSaveScore: boolean = false;
+  let numCols = 2;
   const SCORES_NUM_ROWS = 15;
   const displayScores: Score[] = scoresList.slice(0, SCORES_NUM_ROWS);
 
@@ -46,6 +50,7 @@ const GameBestScores: React.FC<GameBestScoresProps> = ({
           max_score: new_score,
           new_score: true,
         });
+        numCols++;
         canSaveScore = true;
         break;
       }
@@ -53,26 +58,49 @@ const GameBestScores: React.FC<GameBestScoresProps> = ({
   }
 
   return (
-    <div className="p-4 rounded bg-gray-100 dark:bg-gray-800">
-      <h2 className="text-lg font-semibold mb-2">
-        Best Scores - Game {game_id}
+    <div className="p-4 py-10 w-5/6 rounded bg-[#FFFFFF19] dark:bg-[#000000AA]">
+      <h2 className="text-center text-gray-950 dark:text-gray-300 text-2xl font-semibold mb-4 line-clamp-2">
+        🚀 Best Scores - Game {game_id}
       </h2>
-      <table className="w-full table-auto border-collapse">
+      <table className="w-full table-fixed border-collapse bg-white dark:bg-gray-950 border border-solid border-violet-950 dark:border-violet-600 rounded tracking-wider">
         <thead>
           <tr>
-            <th className="text-left px-2 py-1">Username</th>
-            <th className="text-left px-2 py-1">Max Score</th>
-            {canSaveScore && <th className="text-left px-2 py-1">Action</th>}
+            <th
+              className={`text-md font-semibold text-center text-gray-950 dark:text-gray-200 px-2 py-1 w-1/${numCols}`}
+            >
+              Username
+            </th>
+            <th
+              className={`text-md font-semibold text-center text-gray-950 dark:text-gray-200 px-2 py-1 w-1/${numCols}`}
+            >
+              Max Score
+            </th>
+            {canSaveScore && (
+              <th
+                className={`text-md font-semibold text-center text-gray-950 dark:text-gray-200 px-2 py-1 w-1/${numCols}`}
+              >
+                Action
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
           {displayScores.map((score, index) => (
             <tr key={index}>
-              <td className="px-2 py-1">{score.username}</td>
-              <td className="px-2 py-1">{score.max_score}</td>
-              <td className="px-2 py-1">
-                {score.new_score && (
-                  <button onClick={() => saveScore(score)}>Save score</button>
+              <td className="text-sm text-center text-gray-950 dark:text-gray-200 px-2 py-1">
+                {score.username}
+              </td>
+              <td className="text-sm text-center text-gray-950 dark:text-gray-200 px-2 py-1">
+                {score.max_score}
+              </td>
+              <td className="text-sm text-center text-gray-950 dark:text-gray-200 px-2 py-1">
+                {score.new_score && canSaveScore && (
+                  <button
+                    className="p-2 border border-solid rounded-sm cursor-pointer hover:bg-blue-500 bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700"
+                    onClick={() => saveScore(score)}
+                  >
+                    Save score
+                  </button>
                 )}
               </td>
             </tr>
