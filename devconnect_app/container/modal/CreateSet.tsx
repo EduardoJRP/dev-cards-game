@@ -58,7 +58,7 @@ export const CreateSetModal = () => {
   return (
     <>
       <Button
-        variant="outline"
+        variant="primary"
         label="Crear Set"
         onClick={() => setIsOpen(true)}
       />
