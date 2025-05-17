@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/form';
 import { ColorSelect } from '@/components/shared';
 import { CategorySelect } from '@/components/shared/CategorySelect';
 import { Book, FlaskConical, Sigma } from 'lucide-react';
+import { useForm } from '@/hook';
 
 const colorOptions = [
   { value: 'blue', color: '#3b82f6' },
@@ -36,6 +37,19 @@ const categoryOptions = [
 
 export const CreateSetModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {
+    formState,
+    formValidation,
+    onSubmitForm,
+    onInputChange,
+  } = useForm({
+    activeValidation: true,
+    initialState: { name: '', description: '', color: '', category: '' }
+  });
+
+  const handleSubmit = onSubmitForm((data) => {
+    console.log(data, formState, formValidation);
+  });
 
   const handleModal = (isOpen: boolean) => {
     setIsOpen(isOpen);
@@ -55,29 +69,54 @@ export const CreateSetModal = () => {
         title='Crea un nuevo set'
         className='flex flex-col gap-4'
       >
-        <Input
-          label='Nombre'
-          variant='outlined'
-        />
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4"
+        >
+          <Input
+            type='text'
+            label='Nombre'
+            variant='outlined'
+            name='name'
+            value={formState.name}
+            error={!!formValidation.nameValid}
+            onChange={onInputChange}
+          />
 
-        <Input
-          label='Descripción'
-          variant='outlined'
-        />
+          <Input
+            type='text'
+            label='Descripción'
+            variant='outlined'
+            name='description'
+            value={formState.description}
+            onChange={onInputChange}
+            error={!!formValidation.descriptionValid}
+          />
 
-        <ColorSelect
-          color='primary'
-          options={colorOptions}
-        />
+          <CategorySelect
+            label='Seleccione una categoría'
+            color='primary'
+            options={categoryOptions}
+            name='category'
+            error={!!formValidation.categoryValid}
+            onChange={onInputChange}
+          />
 
-        <CategorySelect
-          color='primary'
-          options={categoryOptions}
-        />
-        <Button
-          label='Crear'
-          variant='outline'
-        />
+          <ColorSelect
+            label='Seleccione un color'
+            color='primary'
+            name='color'
+            options={colorOptions}
+            error={!!formValidation.colorValid}
+            onChange={onInputChange}
+          />
+
+          <Button
+            type='submit'
+            label='Crear'
+            variant='primary'
+          />
+        </form>
       </Modal>
     </>
   );
