@@ -1,13 +1,13 @@
-import { cn } from '@/lib/utils';
-import { TIcon } from '@/types/icon';
+import { cn } from '@/lib/utils'
+import { TIcon } from '@/types/icon'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  Icon?: TIcon;
-  messageError?: string | null;
-  error?: boolean;
-  success?: boolean;
-  variant?: 'outlined' | 'filled' | 'standard';
-  label?: string;
+  Icon?: TIcon
+  messageError?: string | null
+  error?: boolean
+  success?: boolean
+  variant?: 'outlined' | 'filled' | 'standard'
+  label?: string
 }
 
 export const Input = ({
@@ -21,51 +21,66 @@ export const Input = ({
   ...rest
 }: InputProps) => {
 
-  const wrapperClasses = cn(
-    'relative transition-colors duration-200 ease-in-out bg-tertiary-light-100', {
-    // Base styles by variant
-    'border-b-2 border-secondary-light-300': variant === 'standard',
-    'border border-transparent rounded-lg px-3': variant === 'outlined',
-    'border-b-2 border-transparent bg-primary-light-300/20 px-3': variant === 'filled',
+  const variants = {
+    standard: 'border-b-2 border-gray-300',
+    outlined: 'rounded-lg border border-gray-300',
+    filled: 'rounded-lg bg-gray-100',
+  }
 
-    // Focus states
-    'has-[:focus]:ring-error-500 has-[:focus]:border-error-500 border-red-500': error,
-    // Success state
-    'has-[:focus]:border-green-500': success,
-
-    // Default state
-    'has-[:focus]:border-secondary-light-200': !error && !success,
-  }, className)
-
-  const inputClasses = cn(
-    'peer w-full bg-transparent text-secondary-light-200 font-semibold appearance-none placeholder:text-secondary-light-200/70 focus:outline-none',
-    {
-      'h-11': variant === 'standard',
-      'h-12 rounded-lg': variant === 'outlined',
-      'h-12 rounded-lg bg-transparent': variant === 'filled',
-    },
-  )
-
-  const iconClasses = cn('text-secondary-light-200 w-5 h-5 absolute top-1/2 -translate-y-1/2 dark:text-gray-400', {
-    'left-0': variant === 'standard',
-    'left-3': variant === 'outlined' || variant === 'filled',
+  const state = cn({
+    'focus-within:ring-0 focus-within:ring-red-500 border-red-500': error,
+    'focus-within:ring-0 focus-within:ring-green-500 border-green-500': success,
+    'focus-within:ring-1 focus-within:ring-primary': !error && !success,
+    // 'focus-within:ring-1 focus-within:ring-primary/50 focus-within:outline-primary/20 outline-transparent outline-2 outline-offset-1 transition-all': !error && !success,
   })
 
   return (
-    <fieldset className='space-y-1'>
-      {label
-        &&
-        <label className='text-sm font-semibold text-primary-light-200'>
+    <fieldset className="space-y-1">
+      {label &&
+        <label className="text-sm font-medium text-gray-700">
           {label}
         </label>
       }
-      <div className={wrapperClasses}>
-        <input className={`${inputClasses} appearance-none `} aria-invalid={error ? 'true' : 'false'} {...rest} />
-
-        {Icon && <Icon className={iconClasses} />}
+      <div
+        className={cn(
+          'relative transition-colors duration-200 p-2',
+          variants[variant],
+          state,
+          className
+        )}
+      >
+        <input
+          aria-invalid={error}
+          className={cn(
+            'peer w-full bg-transparent font-medium text-gray-600 placeholder:text-gray-400 focus:outline-none',
+            {
+              'h-7 pl-6': variant === 'standard' && Icon,
+              'h-7 ': variant === 'standard' && !Icon,
+              'h-7 pl-1': (variant === 'outlined' || variant === 'filled') && Icon,
+              'h-7': (variant === 'outlined' || variant === 'filled') && !Icon,
+            }
+          )}
+          {...rest}
+        />
+        {
+          Icon &&
+          <Icon className={cn(
+            'absolute top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none',
+            {
+              'left-0': variant === 'standard',
+              'left-3': variant === 'outlined' || variant === 'filled',
+            }
+          )} />
+        }
       </div>
 
-      {error && messageError && <p className='mt-1.5 text-xs text-error-500'>{messageError}</p>}
+      {
+        error &&
+        messageError &&
+        <p className="mt-1 text-xs text-red-500">
+          {messageError}
+        </p>
+      }
     </fieldset>
   )
 }
