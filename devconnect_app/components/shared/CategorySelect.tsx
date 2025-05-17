@@ -1,55 +1,104 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/form/Select';
 import { cn } from '@/lib/utils';
 import { TIcon } from '@/types/icon';
+import { ChangeEvent } from 'react';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '../ui/form/Select'
 
 type CategoryOption = {
-  name: string,
-  icon: TIcon,
+  name: string
+  icon: TIcon
   value: string
 }
 
 interface Props {
+  name?: string
   className?: string
-  color: 'primary' | 'secondary' | 'accent',
-  options: CategoryOption[],
-  onChange?: (value: string) => void,
+  color: 'primary' | 'secondary'
+  options: CategoryOption[]
+  label?: string,
+  error?: boolean
+  success?: boolean
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const CategorySelect = ({
+  name,
   className,
   color,
   options,
-  onChange
+  onChange,
+  label,
+  error = false,
+  success = false,
 }: Props) => {
 
-  const styleColor = {
-    'primary': 'border border-primary dark:border-primary-dark',
-    'secondary': 'border border-secondary dark:border-secondary-dark',
-    'accent': 'border border-accent dark:border-accent-dark',
+  const handleColorSelect = (value: string) => {
+    if (onChange && name) {
+      const event = {
+        target: { name, value }
+      } as unknown as ChangeEvent<HTMLInputElement>
+
+      onChange(event)
+    }
   }
 
+  const styleColor = {
+    primary: 'border border-gray-300 focus-within:border-primary has-focus-within:border-primary',
+    secondary: 'border border-gray-500 dark:border-gray-400',
+  }
+
+  const state = cn({
+    'focus-within:ring-1 focus-within:ring-red-500 border-red-500': error,
+    'focus-within:ring-1 focus-within:ring-green-500 border-green-500': success,
+    // 'focus-within:ring-1 focus-within:ring-primary': !error && !success,
+    // 'focus-within:ring-1 focus-within:ring-primary/50 focus-within:outline-primary/20 outline-transparent outline-2 outline-offset-1 transition-all': !error && !success,
+  })
+
   return (
-    <Select>
-      <SelectTrigger className={cn("w-full", styleColor[color as keyof typeof styleColor], className)}>
-        <SelectValue placeholder="Selecciona una materia" />
-      </SelectTrigger>
-      <SelectContent>
-        {
-          options.map((options) => (
+    <div className="space-y-1 w-full">
+      {label && (
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
+          {label}
+        </label>
+      )}
+
+      <Select
+        name={name}
+        onValueChange={handleColorSelect}
+      >
+        <SelectTrigger
+          className={cn(
+            'w-full min-h-11 cursor-pointer',
+            styleColor[color],
+            state,
+            className
+          )}
+        >
+          <SelectValue placeholder="Selecciona una materia" />
+        </SelectTrigger>
+        <SelectContent
+          className='w-full'
+        >
+          {options.map(({ name, icon: Icon, value }) => (
             <SelectItem
-              key={options.name}
-              value={options.name}
-              onClick={() => onChange && onChange(options.value)}
-              aria-label={`Select ${options.name} category`}
-              aria-pressed
-              className='space-y-2'
+              key={value}
+              value={value}
+              className="flex items-center gap-2"
             >
-              <options.icon className="mr-2 h-4 w-4" />
-              <span>{options.name}</span>
+              <Icon className="h-4 w-4 text-gray-500 dark:text-gray-300" />
+              <span className='font-medium text-gray-600 dark:text-gray-300'>
+                {name}
+              </span>
             </SelectItem>
-          ))
-        }
-      </SelectContent>
-    </Select>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   )
 }
