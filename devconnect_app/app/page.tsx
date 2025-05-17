@@ -4,7 +4,10 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import "./globals.css";
 import NavBar from "../components/navbar";
+import ScriptMenu from "../components/ScriptMenu";
+import ThemeToggleButton from "../components/ThemeToggleButton";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
+import GameBestScores from "@/components/GameBestScores";
 
 export default function Home() {
   const router = useRouter();
@@ -14,6 +17,8 @@ export default function Home() {
       className="page-background min-h-screen"
       style={{ backgroundColor: "#4B2067" }}
     >
+      <ThemeToggleButton />
+      {/* TODO: Agregar a navbar */}
       <header>
         <NavBar />
       </header>
@@ -21,13 +26,21 @@ export default function Home() {
         <main className="flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-5xl font-semibold mb-8 text-white">Our Games</h1>
           <div className="flex flex-row justify-between gap-4 w-full px-8">
-            <button onClick={() => router.push("/game1")} className="flex-1 bg-purple-400 text-white text-center p-4 rounded shadow">
+            <button
+              onClick={() => router.push("/game1")}
+              className="flex-1 bg-purple-400 text-white text-center p-4 rounded shadow"
+            >
               game1
             </button>
-            <button onClick={() => router.push("/game2")} className="flex-1 bg-purple-400 text-white text-center p-4 rounded shadow">
+            <button
+              onClick={() => router.push("/game2")}
+              className="flex-1 bg-purple-400 text-white text-center p-4 rounded shadow"
+            >
               game2
             </button>
           </div>
+          <ScriptMenu title="🎮 Library" />
+          <GameBestScores game_id={1} new_score={230} />
         </main>
       </SignedIn>
       <SignedOut>
