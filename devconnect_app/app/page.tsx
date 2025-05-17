@@ -7,6 +7,8 @@ import NavBar from "../components/navbar";
 import ScriptMenu from "../components/ScriptMenu";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { CreateSetModal } from "@/container/modal";
+import { AddCardModal } from "@/container/modal/AddCard";
 import GameBestScores from "@/components/GameBestScores";
 
 export default function Home() {
@@ -22,6 +24,12 @@ export default function Home() {
       <header>
         <NavBar />
       </header>
+
+      <section>
+        <CreateSetModal />
+        {/* <AddCardModal isOpen={true} handleModal={() => { }} /> */}
+      </section>
+
       <SignedIn>
         <main className="flex flex-col items-center justify-center min-h-screen">
           <h1 className="text-5xl font-semibold mb-8 text-white">Our Games</h1>
