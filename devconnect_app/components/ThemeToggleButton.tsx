@@ -18,7 +18,7 @@ const ThemeToggleButton = () => {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+      className="px-4 py-2 m-4 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
     >
       {theme === "dark" ? (
         <div className="flex">

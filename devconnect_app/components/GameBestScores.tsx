@@ -58,7 +58,7 @@ const GameBestScores: React.FC<GameBestScoresProps> = ({
   }
 
   return (
-    <div className="p-4 py-10 w-5/6 rounded bg-[#FFFFFF19] dark:bg-[#000000AA]">
+    <div className=" flex flex-col items-center justify-center h-[calc(100vh-2rem)] w-[calc(100vw-14rem)] p-4 py-10  m-4 rounded bg-[#FFFFFF19] dark:bg-[#000000AA]">
       <h2 className="text-center text-gray-950 dark:text-gray-300 text-2xl font-semibold mb-4 line-clamp-2">
         🚀 Best Scores - Game {game_id}
       </h2>
