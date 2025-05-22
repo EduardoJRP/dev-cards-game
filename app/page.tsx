@@ -2,22 +2,19 @@
 
 import React from "react";
 import "./globals.css";
-import NavBar from "../components/navbar";
+import Navbar from "@/components/layout/Navbar";
 import ScriptMenu from "../components/ScriptMenu";
 import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div
-      className="flex flex-row page-background min-h-screen"
-      style={{ backgroundColor: "#4B2067" }}
-    >
-      <header>
-        <NavBar />
+    <div className="flex flex-row justify-center page-background min-h-screen p-10">
+      <header className="">
+        <Navbar />
       </header>
       <div className="rounded-xl m-8 p-8 bg-purple-500">
         <SignedIn>
-          <main className="flex flex-col items-center justify-center min-h-screen">
+          <main className="flex flex-col items-center justify-center max-h-screen">
             <h1 className="text-5xl font-semibold mb-8 text-white">
               Our Games
             </h1>

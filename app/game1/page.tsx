@@ -1,7 +1,7 @@
 "use client";
 
 import GameBestScores from "@/components/GameBestScores";
-import NavBar from "@/components/navbar";
+import NavBar from "@/components/layout/Navbar";
 import React from "react";
 
 const game1 = () => {
