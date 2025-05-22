@@ -1,4 +1,4 @@
-import { EFieldValidation, fieldValidation, FieldValidationType } from '@/utils/validation/field';
+import { EFieldValidation, fieldValidation, FieldValidationType } from '@/lib/field';
 import { useMemo, useRef, useState, ChangeEvent, FormEvent } from 'react';
 
 // Definimos el tipo del estado del formulario

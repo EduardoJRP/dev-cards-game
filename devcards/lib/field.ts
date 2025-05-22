@@ -1,4 +1,4 @@
-
+export * from './field';
 export enum EFieldValidation {
    email = 'email',
    password = 'password',

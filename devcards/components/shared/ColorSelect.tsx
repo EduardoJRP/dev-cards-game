@@ -2,7 +2,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { hexToRgba } from '@/utils/transform';
+import { hexToRgba } from '@/lib/transform';
 
 type ColorOption = {
   value: string

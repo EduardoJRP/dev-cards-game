@@ -1,3 +1,5 @@
+export * from './hexToRgba';
+
 export const hexToRgba = (hex: string, alpha: number): string => {
    const sanitizedHex = hex.replace('#', '');
    const bigint = parseInt(sanitizedHex, 16);
