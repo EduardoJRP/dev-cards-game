@@ -2,7 +2,7 @@
 
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import ThemeToggleButton from "../components/ThemeToggleButton";
+import ThemeToggleButton from "./ThemeToggleButton";
 import React from "react";
 
 export default function NavBar() {
