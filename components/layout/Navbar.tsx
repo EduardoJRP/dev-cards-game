@@ -8,8 +8,6 @@ import { Button } from "../ui/Button";
 
 export default function Navbar() {
   const route = useRouter();
-  const buttonClass =
-    "bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded w-full transition";
 
   return (
     <nav className="flex flex-col h-full items-center justify-between bg-purple-500 text-white p-4 m-4 mb-2 rounded-2xl">

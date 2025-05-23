@@ -8,21 +8,21 @@ import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div className="flex flex-row justify-center page-background min-h-screen p-10">
+    <div className="flex flex-row justify-center page-background h-screen p-10">
       <header className="">
         <Navbar />
       </header>
-      <div className="rounded-xl m-8 p-8 bg-purple-500">
+      <main className="flex-1 flex-col h-full justify-center items-center p-4 pt-16 m-4 mb-2 rounded-2xl bg-purple-500">
         <SignedIn>
-          <main className="flex flex-col items-center justify-center max-h-screen">
+          <div className="flex flex-col items-center justify-center max-h-screen">
             <h1 className="text-5xl font-semibold mb-8 text-white">
               Our Games
             </h1>
             <ScriptMenu title="🎮 Library" />
-          </main>
+          </div>
         </SignedIn>
         <SignedOut>
-          <main className="flex flex-col items-center justify-center min-h-screen">
+          <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl font-semibold mb-8 text-white">
               You need to log in!
             </h1>
@@ -43,9 +43,9 @@ export default function Home() {
                 </SignUpButton>
               </div>
             </div>
-          </main>
+          </div>
         </SignedOut>
-      </div>
+      </main>
     </div>
   );
 }
