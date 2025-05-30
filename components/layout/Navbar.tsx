@@ -10,7 +10,7 @@ export default function Navbar() {
   const route = useRouter();
 
   return (
-    <nav className="flex flex-col h-full items-center justify-between bg-purple-500 text-white p-4 m-4 mb-2 rounded-2xl">
+    <nav className="flex flex-col h-full items-center justify-between bg-purple-500 text-white min-w-0 min-h-0 overflow-auto p-4 m-4 mb-2 rounded-2xl">
       <div className="flex flex-col">
         <h1 className="text-lg font-bold text-center p-4">DevCards</h1>
         <div className="flex flex-col items-center space-y-3">
