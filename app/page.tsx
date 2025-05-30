@@ -20,6 +20,14 @@ export default function Home() {
             <div className="text-md md:text-lg lg:text-xl">
               Hi there! This is a simple game where you can play with your friends and test your skills. Click the button below to start playing!
             </div>
+            <div className="grid grid-cols-3 gap-4 mt-8">
+              <div>What game do you wanna play?</div>
+              <div>What game do you wanna play?</div>
+              <div>What game do you wanna play?</div>
+              <div>What game do you wanna play?</div>
+              <div>What game do you wanna play?</div>
+              <div>What game do you wanna play?</div>
+            </div>
           </div>
         </SignedIn>
         <SignedOut>
