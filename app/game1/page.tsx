@@ -1,6 +1,5 @@
 "use client";
 
-import GameBestScores from "@/components/GameBestScores";
 import NavBar from "@/components/layout/Navbar";
 import React from "react";
 
@@ -14,7 +13,6 @@ const game1 = () => {
         <NavBar />
       </header>
       <main>
-        <GameBestScores game_id={1} new_score={230} />
       </main>
     </div>
   );

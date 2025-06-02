@@ -2,7 +2,6 @@
 
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import ThemeToggleButton from "../ThemeToggleButton";
 import React from "react";
 import { Button } from "../ui/Button";
 
@@ -11,9 +10,9 @@ export default function Navbar() {
 
   return (
     <nav className="flex flex-col h-full items-center justify-between bg-purple-500 text-white min-w-0 min-h-0 overflow-auto p-4 m-4 mb-2 rounded-2xl">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <h1 className="text-lg font-bold text-center p-4">DevCards</h1>
-        <div className="flex flex-col items-center space-y-3">
+        <div className="flex flex-col items-center space-y-3 w-full">
           <Button
             label="Home"
             onClick={() => {
@@ -28,7 +27,15 @@ export default function Navbar() {
           >
             Game Scores
           </Button>
-          <ThemeToggleButton />
+          <Button
+            label="Library"
+            onClick={() => {
+              route.push("/userlibrary");
+            }}
+          >
+            Library
+          </Button>
+          {/*<ThemeToggleButton />*/}
         </div>
       </div>
       <SignedIn>

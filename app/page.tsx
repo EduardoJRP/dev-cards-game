@@ -8,25 +8,30 @@ import { SignedOut, SignedIn, SignInButton, SignUpButton } from "@clerk/nextjs";
 export default function Home() {
   return (
     <div className="flex flex-row justify-center page-background min-w-0 min-h-0 overflow-auto h-screen p-2 md:p-10">
-      <header className="">
+      <header className="h-full w-1/8">
         <Navbar />
       </header>
       <main className="flex-1 flex-col h-full min-w-0 min-h-0 overflow-auto justify-center items-center p-4 pt-16 m-4 mb-2 rounded-2xl bg-purple-500">
         <SignedIn>
-          <div className="flex flex-col items-center justify-center max-h-screen">
+
+          <div className="flex flex-col items-center justify-center h-full max-h-screen p-5">
+
+            {/* Title and welcoming for the user */}
             <h1 className="text-xl md:text-3xl lg:text-5xl font-semibold mb-8 text-white">
               Welcome to DevCards!
             </h1>
             <div className="text-md md:text-lg lg:text-xl">
               Hi there! This is a simple game where you can play with your friends and test your skills. Click the button below to start playing!
             </div>
-            <div className="grid grid-cols-3 gap-4 mt-8">
-              <div>What game do you wanna play?</div>
-              <div>What game do you wanna play?</div>
-              <div>What game do you wanna play?</div>
-              <div>What game do you wanna play?</div>
-              <div>What game do you wanna play?</div>
-              <div>What game do you wanna play?</div>
+
+            {/* Your library section */}
+            <div className="flex flex-col mt-8 p-5 h-full w-full">
+              <h2 className="text-lg md:text-2xl lg:text-4xl m-5">Your Library</h2>
+              <div className="bg-purple-700 text-white text-center p-8 rounded-xl shadow h-full w-full">
+                <div>
+
+                </div>
+              </div>
             </div>
           </div>
         </SignedIn>
