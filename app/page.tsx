@@ -27,7 +27,20 @@ export default function Home() {
             {/* Your library section */}
             <div className="flex flex-col mt-8 p-5 h-full w-full">
               <h2 className="text-lg md:text-2xl lg:text-4xl m-5">Your Library</h2>
-              <div className="bg-purple-700 text-white text-center p-8 rounded-xl shadow h-full w-full">
+              <div className="flex flex-row bg-slate-600 text-white text-center p-8 rounded-xl shadow h-full w-full">
+                <div className="rounded-xl">
+                  card 1
+                </div>
+                <div>
+                  card 2
+                </div>
+              </div>
+            </div>
+
+            {/* Global section */}
+            <div className="flex flex-col mt-8 p-5 h-full w-full">
+              <h2 className="text-lg md:text-2xl lg:text-4xl m-5">Global Section</h2>
+              <div className="bg-slate-600 text-white text-center p-8 rounded-xl shadow h-full w-full">
                 <div>
 
                 </div>
